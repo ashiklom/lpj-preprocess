@@ -1,9 +1,11 @@
 from pathlib import Path
 import re
+from multiprocessing import Pool
+
 import xarray as xr
 import pandas as pd
 
-def parse_fname(cfile):
+def parse_fname(cfile: Path|str):
     m = re.match(r".*CHELSA_([a-zA-Z0-9]+)_(\d+)_(\d+)_(\d+)_V.*", str(cfile))
     if m is None:
         raise ValueError(f"Invalid file name: {cfile}")
@@ -12,7 +14,7 @@ def parse_fname(cfile):
     dt = pd.date_range(f"{m.group(4)}-{m.group(3)}-{m.group(2)}", periods=1)
     return varname, dt
 
-def preprocess_file(fname):
+def preprocess_file(fname: Path|str):
     varname, dt = parse_fname(fname)
     dat = xr.open_dataset(fname, engine="rasterio")
     result = (dat.squeeze("band", drop=True).
@@ -22,7 +24,7 @@ def preprocess_file(fname):
               rename_vars({"band_data": varname, "x": "lon", "y": "lat"}))
     return result
 
-def convert_file(fname):
+def convert_file(fname: Path) -> Path:
     outdir = Path("CHELSA-nc")
     outdir.mkdir(exist_ok=True)
     outfile = outdir / fname.with_suffix(".nc").name
@@ -34,4 +36,6 @@ def convert_file(fname):
 if __name__ == "__main__":
     clipped_dir = Path("CHELSA-clipped/")
     flist = sorted(clipped_dir.glob("*.tif"))
-    fname = Path("CHELSA-clipped/CHELSA_tasmin_01_01_1980_V.2.1.tif")
+
+    with Pool(5) as pool:
+        pool.map(convert_file, flist)
