@@ -37,5 +37,5 @@ if __name__ == "__main__":
     clipped_dir = Path("CHELSA-clipped/")
     flist = sorted(clipped_dir.glob("*.tif"))
 
-    with Pool(5) as pool:
+    with Pool() as pool:
         pool.map(convert_file, flist)
