@@ -7,3 +7,5 @@ CHELSA-raw/
 CHELSA-clipped/
 CHELSA-nc/
 land-polygons/
+
+**/*.tar.gz
