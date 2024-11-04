@@ -1,0 +1,16 @@
+[project]
+name = "chelsa-test"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "gdal==3.9.2",
+    "h5netcdf>=1.4.0",
+    "ipython>=8.29.0",
+    "matplotlib>=3.9.2",
+    "pyproj>=3.7.0",
+    "rasterio>=1.4.2",
+    "rioxarray>=0.17.0",
+    "xarray>=2024.10.0",
+]
