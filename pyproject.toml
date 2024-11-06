@@ -1,16 +1,28 @@
 [project]
-name = "chelsa-test"
+name = "lpj-preprocess"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "gdal==3.9.2",
     "h5netcdf>=1.4.0",
     "ipython>=8.29.0",
     "matplotlib>=3.9.2",
     "pyproj>=3.7.0",
     "rasterio>=1.4.2",
     "rioxarray>=0.17.0",
-    "xarray>=2024.10.0",
+    "xarray>=2024.10.0", "tqdm>=4.67.0,<5",
 ]
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.dependencies]
+gdal = ">3.7"
+
+[tool.pixi.system-requirements]
+linux = "4.12"
+libc = "2.22"
+
+[tool.pixi.tasks]
