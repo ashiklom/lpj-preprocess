@@ -5,7 +5,12 @@
 # data
 CHELSA-raw/
 CHELSA-clipped/
+CHELSA-clipped-amazon/
 CHELSA-nc/
+CHELSA-nc-amazon/
+
 land-polygons/
+
+logs/
 
 **/*.tar.gz
