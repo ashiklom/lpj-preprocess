@@ -3,11 +3,8 @@
 *.egg-info
 
 # data
-CHELSA-raw/
-CHELSA-clipped/
-CHELSA-clipped-amazon/
-CHELSA-nc/
-CHELSA-nc-amazon/
+CHELSA-*/*.tif
+CHELSA-*/*.nc
 
 land-polygons/
 
