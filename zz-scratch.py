@@ -1,5 +1,28 @@
 #!/usr/bin/env python
 
+import xarray as xr
+
+orig_luh_path = "/discover/nobackup/projects/LPJ/LPJ_inputs/LandUseChange/TRENDYv13/luhv2_1700-2024_05bil.nc"
+orig_luh = xr.open_dataset(orig_luh_path, decode_times=False)
+
+target = xr.open_dataset("CHELSA-combined-amazon/pr.nc", decode_times=False)
+tlat = target["lat"]
+tlon = target["lon"]
+luh_resampled = orig_luh.interp(lat=tlat, lon=tlon, method="nearest")
+
+xmin = -81.7376392819
+xmax = xmin + 5716 * 0.0083333333
+ymax = 12.6373607006
+ymin = ymax - 4895 * 0.0083333333
+amazon = orig_luh.sel(lon = slice(xmin, xmax), lat = slice(ymin, ymax))
+
+
+
+luh = xr.open_dataset("LPJ-resampled-amazon/luhv2_1700-2024_05bil.nc", decode_times=False)
+soil = xr.open_dataset("LPJ-resampled-amazon/soil_global_hd_filled.nc")
+
+################################################################################
+
 import rasterio as rio
 from rasterio.plot import show
 
